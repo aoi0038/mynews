@@ -10,3 +10,20 @@
     <h1>My profile作成</h1>
   </body>
 </html>
+
+@extends('layouts.profile')
+
+
+{{-- admin.blade.phpの@yield('title')に'ニュースの新規作成'を埋め込む --}}
+@section('title', 'My プロフィール')
+
+{{-- admin.blade.phpの@yield('content')に以下のタグを埋め込む --}}
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h2>プロフィール画面</h2>
+            </div>
+        </div>
+    </div>
+@endsection
