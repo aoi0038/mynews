@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'admin'], function(){
-  Route::get('news/create', 'Admin\NewsController@add');
+  Route::get('news/create', 'Admin\NewsController@add')->middleware('auth');
   Route::get('profile/create', 'Admin\ProfileController@add');
   Route::get('profile/edit', 'Admin\ProfileController@edit');
 ;
@@ -30,8 +30,8 @@ Route::group(['prefix' => 'admin'], function(){
 //AAAControllerのbbbというAction に渡す
 //Routingの設定」を書いてみてください。
 
-Route::group(['prefix','xxxxx'], function(){
-  Route::get('xxxxx','AAA\NewsController@bbb');
+Route::group(['prefix','XXX'], function(){
+  Route::get('********','XXX\AAAController@bbb');
 });
 
 //4
@@ -39,3 +39,7 @@ Route::group(['prefix','xxxxx'], function(){
 //add Action に、admin/profile/edit にアクセスしたら 
 //ProfileController の edit Action に割り当てるように設定してください。
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
