@@ -15,31 +15,46 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'admin'], function(){
-  Route::get('news/create', 'Admin\NewsController@add')->middleware('auth');
-  Route::get('profile/create', 'Admin\ProfileController@add')->middleware('auth');
-  Route::get('profile/edit', 'Admin\ProfileController@edit')->middleware('auth');
-;
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+     Route::get('news/create', 'Admin\NewsController@add');
+     Route::post('news/create', 'Admin\NewsController@create');
+     Route::get('profile/create', 'Admin\ProfileController@add');
+     Route::post('profile/create', 'Admin\ProfileController@create');
+     Route::post('profile/edit', 'Admin\ProfileController@update')->middleware('auth');
+
 });
 
+//課題１３
+//Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+//Route::post('profile/create', 'Admin\ProfileController@create');
+//});
 
-//課題
+
+
+  
+  //課題　　１１、１２
+//Route::get('news/create', 'Admin\NewsController@add')->middleware('auth');
+//Route::post('news/create', 'Admin\NewsController@create');
+//Route::get('profile/create', 'Admin\ProfileController@add')->middleware('auth');
+//Route::get('profile/edit', 'Admin\ProfileController@edit')->middleware('auth');
+
+
+
+
+//課題０９
 
 //3
 //「http://XXXXXX.jp/XXX というアクセスが来たときに、
 //AAAControllerのbbbというAction に渡す
 //Routingの設定」を書いてみてください。
 
-Route::group(['prefix','XXX'], function(){
-  Route::get('********','XXX\AAAController@bbb');
-});
+//Route::group(['prefix','XXX'], function(){
+//Route::get('********','XXX\AAAController@bbb');
+//});
 
 //4
 //admin/profile/create にアクセスしたら ProfileController の 
 //add Action に、admin/profile/edit にアクセスしたら 
 //ProfileController の edit Action に割り当てるように設定してください。
 
-
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
