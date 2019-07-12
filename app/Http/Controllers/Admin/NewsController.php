@@ -27,7 +27,7 @@ class NewsController extends Controller
         $path = $request->file('image')->store('public/image');
         $news->image_path = basename($path);
       } else {
-          $news->image_path = null;
+        $news->image_path = null;
       }
 
       // フォームから送信されてきた_tokenを削除する
@@ -39,8 +39,9 @@ class NewsController extends Controller
       $news->fill($form);
       $news->save();
     
-  return redirect('admin/news/create');  
+      return redirect('admin/news/create');  
   }
+  
   public function index(Request $request)
   {
       $cond_title = $request->cond_title;
@@ -53,6 +54,7 @@ class NewsController extends Controller
       }
       return view('admin.news.index', ['posts' => $posts, 'cond_title' => $cond_title]);
   } 
+  
   public function edit(Request $request)
   {
       // News Modelからデータを取得する
