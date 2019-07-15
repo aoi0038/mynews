@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Profile;
+use App\ProfileHistory;
+use Carbon\Carbon;
 
 class ProfileController extends Controller
 {
@@ -29,7 +31,7 @@ class ProfileController extends Controller
       $profile->save();
     
     
-   return redirect('admin/profile/create');  
+      return redirect('admin/profile/create');  
   }  
   
   public function index(Request $request)
@@ -50,7 +52,7 @@ class ProfileController extends Controller
       if (empty($profile)) {
         abort(404);    
       }
-   return view('admin.profile.edit', ["profile_form" => $profile]);
+      return view('admin.profile.edit', ["profile_form" => $profile]);
   }
   
   public function update(Request $request)
@@ -59,23 +61,25 @@ class ProfileController extends Controller
       $this->validate($request, Profile::$rules);
       // Profile Modelからデータを取得する
       $profile = Profile::find($request->id);
+      
       // 送信されてきたフォームデータを格納する
       $profile_form = $request->all();
-      if (isset($profile_form['image'])) {
-        $path = $request->file('image')->store('public/image');
-        $profile->image_path = basename($path);
-        unset($profile_form['image']);
-      } elseif (isset($request->remove)) {
-        $profile->image_path = null;
-        unset($profile_form['remove']);
-      }
       
       unset($profile_form['_token']);
-
-      // 該当するデータを上書きして保存する
+       
       $profile->fill($profile_form)->save();
-    return redirect('admin/profile');
+
+      // 以下を追記
+      $history = new ProfileHistory;
+      $history->profile_id = $profile->id;
+      $history->edited_at = Carbon::now();
+     
+    
+      // 該当するデータを上書きして保存する
+      $history->save();
+      return redirect('admin/profile');
   }
+  
   public function delete(Request $request)
   {
       // 該当するProfile Modelを取得

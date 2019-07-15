@@ -56,7 +56,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 //AAAControllerのbbbというAction に渡す
 //Routingの設定」を書いてみてください。
 
-//Route::get('XXX', 'Admin\AAAController@bbb');
+//Route::get('XXX', 'AAAController@bbb');
 
 
 //4
