@@ -19,13 +19,12 @@ class ProfileController extends Controller
   {
     // Varidationを行う
       $this->validate($request, Profile::$rules);
-
       $profile = new Profile;
       $form = $request->all();
 
-
       unset($form['_token']);
       unset($form['image']);
+      
       // データベースに保存する
       $profile->fill($form);
       $profile->save();

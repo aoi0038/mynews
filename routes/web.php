@@ -13,7 +13,10 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+}); 
+
+Route::get('/', 'NewsController@index');  
+Route::get('profile', 'NewsController@profile');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
      Route::get('news/create', 'Admin\NewsController@add');
